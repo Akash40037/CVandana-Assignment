@@ -1,0 +1,25 @@
+let userSentence = prompt("Please enter a sentence:");
+console.log("User's sentence: " + userSentence);
+
+function reverseWords(sentence) {
+  let words = sentence.split(' ');
+  let reversedWords = words.map(word => word.split('').reverse().join(''));
+  let reversedSentence = reversedWords.join(' ');
+  return reversedSentence;
+}
+
+console.log("Reversed sentence: " + reverseWords(userSentence));
+
+let userArray = prompt("Please enter a comma-separated list of numbers:");
+console.log("User's array: " + userArray);
+
+function sortArrayDescending(arr) {
+  arr = arr.split(',').map(Number);
+  arr.sort(function(a, b) {
+    return b - a;
+  });
+  return arr;
+}
+
+console.log("Sorted array: " + sortArrayDescending(userArray));
+
