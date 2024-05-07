@@ -1,0 +1,141 @@
+**HTML CODE :-**
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" readonly>
+    <div class="buttons">
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('+')">+</button>
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('-')">-</button>
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('*')">*</button>
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="appendToDisplay('/')">/</button>
+      <button onclick="clearDisplay()">C</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+**CSS CODE :-**
+
+.calculator {
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#display {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+}
+
+button {
+  padding: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+
+**JAVA SCRIPT CODE :- **
+
+
+
+let display = document.getElementById('display');
+
+function appendToDisplay(value) {
+    display.value += value;
+}
+
+function clearDisplay() {
+    display.value = '';
+}
+
+function calculate() {
+    let expression = display.value;
+    let result = evaluateExpression(expression);
+    if (result !== null) {
+        display.value = result;
+    } else {
+        display.value = 'Error';
+    }
+}
+
+function evaluateExpression(expression) {
+    let operators = ['+', '-', '*', '/'];
+    let operator = '';
+    let operands = [];
+    let currentOperand = '';
+    for (let i = 0; i < expression.length; i++) {
+        let char = expression[i];
+        if (operators.includes(char)) {
+            if (currentOperand !== '') {
+                operands.push(parseFloat(currentOperand));
+                currentOperand = '';
+            }
+            operator = char;
+        } else {
+            currentOperand += char;
+        }
+    }
+    if (currentOperand !== '') {
+        operands.push(parseFloat(currentOperand));
+    }
+
+    if (operands.length !== 2 || isNaN(operands[0]) || isNaN(operands[1])) {
+        return null;
+    }
+
+    switch (operator) {
+        case '+':
+            return operands[0] + operands[1];
+        case '-':
+            return operands[0] - operands[1];
+        case '*':
+            return operands[0] * operands[1];
+        case '/':
+            if (operands[1] === 0) {
+                return null;
+            }
+            return operands[0] / operands[1];
+        default:
+            return null;
+    }
+}
+
+
+
+
+
+
+
+
