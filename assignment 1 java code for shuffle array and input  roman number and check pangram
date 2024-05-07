@@ -1,0 +1,85 @@
+import java.util.Arrays;
+
+public class ShuffleRomanPangramChecker {
+
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4, 5, 6, 7};
+        System.out.println("Original array: " + Arrays.toString(array));
+        shuffleArray(array);
+        System.out.println("Shuffled array: " + Arrays.toString(array));
+
+        System.out.println("Enter a Roman number:");
+        String romanNumber = System.console().readLine();
+        int romanToInt = romanToInt(romanNumber);
+        System.out.println("Roman number " + romanNumber + " is equal to " + romanToInt);
+
+        System.out.println("Enter a sentence to check if it's a pangram:");
+        String sentence = System.console().readLine();
+        boolean isPangram = isPangram(sentence);
+        System.out.println("Is sentence a pangram? " + isPangram);
+    }
+
+    public static void shuffleArray(int[] array) {
+        for (int i = array.length - 1; i > 0; i--) {
+            int j = (int) (Math.random() * (i + 1));
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+
+    public static int romanToInt(String roman) {
+        int result = 0;
+        int previousValue = 0;
+        for (int i = roman.length() - 1; i >= 0; i--) {
+            int currentValue = getValue(roman.charAt(i));
+            if (currentValue <= previousValue) {
+                result += currentValue;
+            } else {
+                result += (currentValue - 2 * previousValue);
+            }
+            previousValue = currentValue;
+        }
+        return result;
+    }
+
+    public static int getValue(char romanChar) {
+        switch (romanChar) {
+            case 'I':
+                return 1;
+            case 'V':
+                return 5;
+            case 'X':
+                return 10;
+            case 'L':
+                return 50;
+            case 'C':
+                return 100;
+            case 'D':
+                return 500;
+            case 'M':
+                return 1000;
+            default:
+                throw new IllegalArgumentException("Invalid Roman character: " + romanChar);
+        }
+    }
+
+    public static boolean isPangram(String sentence) {
+        boolean[] alphabet = new boolean[26];
+        for (char c : sentence.toLowerCase().toCharArray()) {
+            if (c >= 'a' && c <= 'z') {
+                alphabet[c - 'a'] = true;
+            }
+        }
+
+        for (boolean b : alphabet) {
+            if (!b) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+
